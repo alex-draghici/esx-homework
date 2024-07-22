@@ -1,0 +1,10 @@
+services:
+  php-fpm:
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${WARDEN_ENV_NAME}-${TRAEFIK_FRONTEND}.tls=true
+      - traefik.http.routers.${WARDEN_ENV_NAME}-${TRAEFIK_FRONTEND}.priority=3
+      - traefik.http.routers.${WARDEN_ENV_NAME}-${TRAEFIK_FRONTEND}.rule=Host(`${TRAEFIK_FRONTEND}.${TRAEFIK_DOMAIN}`)
+      - traefik.http.routers.${WARDEN_ENV_NAME}-${TRAEFIK_FRONTEND}.service=${WARDEN_ENV_NAME}-${TRAEFIK_FRONTEND}
+      - traefik.http.services.${WARDEN_ENV_NAME}-${TRAEFIK_FRONTEND}.loadbalancer.server.port=3000
+      - traefik.docker.network=${WARDEN_ENV_NAME}_default
