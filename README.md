@@ -40,7 +40,7 @@ Before you begin, ensure you have the following installed on your local machine:
 
     - Update the `.env` file with your database credentials and other environment variables. If you are using Warden, the defaults should work out of the box.
 
-### If you are using Warden, start the env (``warden env up``), generate sign certficate (``warden sign-certificate esx.test``) and run the rest of the commands in ``warden shell``, including the frontend setup.
+### If you are using Warden, generate sign certficate (``warden sign-certificate esx.test``), start the env (``warden env up``) and run the rest of the commands in ``warden shell``, including the frontend setup.
 
 4. **Generate the application key**
 
