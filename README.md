@@ -8,7 +8,7 @@ This project is a full-stack web application using Laravel Breeze API with Sanct
 
 Before you begin, ensure you have the following installed on your local machine:
 
-- [PHP](https://www.php.net/downloads.php) (>=8.0)
+- [PHP](https://www.php.net/downloads.php) (>=8.2)
 - [Composer](https://getcomposer.org/)
 - [Node.js](https://nodejs.org/) (>=20.x)
 - [npm](https://www.npmjs.com/get-npm)
