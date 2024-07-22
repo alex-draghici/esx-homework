@@ -1,6 +1,6 @@
 # ESX Homework
 
-# Laravel Breeze API & Next.js CRUD Application
+# Laravel [Breeze API & Next.js](https://github.com/laravel/breeze-next/) CRUD Application
 
 This project is a full-stack web application using Laravel Breeze API with Sanctum for the backend and Next.js with React for the frontend. It provides basic CRUD operations for user management.
 
