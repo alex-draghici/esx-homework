@@ -21,6 +21,19 @@ class UserController extends Controller
     }
 
     /**
+     * @param $id
+     * @return Collection
+     */
+    public function show($id): Collection
+    {
+        if ($id === "trashed") {
+            return User::onlyTrashed()->get();
+        }
+
+        return User::findOrFail($id);
+    }
+
+    /**
      * @param Request $request
      * @return mixed
      */
@@ -78,5 +91,25 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json(['message' => 'User deleted successfully.']);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function trashed()
+    {
+        return User::onlyTrashed()->get();
+    }
+
+    /**
+     * @param $id
+     * @return JsonResponse
+     */
+    public function restore($id): JsonResponse
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        $user->restore();
+
+        return response()->json(['message' => 'User restored successfully.']);
     }
 }

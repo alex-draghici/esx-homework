@@ -14,6 +14,7 @@ const Dashboard = () => {
     const currentUser = useUser()
 
     const [users, setUsers] = useState([])
+    const [trashedUsers, setTrashedUsers] = useState([])
     const [formData, setFormData] = useState({
         id: '',
         first_name: '',
@@ -28,12 +29,22 @@ const Dashboard = () => {
 
     useEffect(() => {
         fetchUsers()
+        fetchTrashedUsers()
     }, [])
 
     const fetchUsers = async () => {
         try {
             const response = await axios.get('/api/users')
             setUsers(response.data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const fetchTrashedUsers = async () => {
+        try {
+            const response = await axios.get('/api/users/trashed')
+            setTrashedUsers(response.data)
         } catch (error) {
             console.error(error)
         }
@@ -101,6 +112,18 @@ const Dashboard = () => {
             await axios.delete(`/api/users/${id}`)
             setStatus('User deleted successfully!')
             fetchUsers()
+            fetchTrashedUsers()
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const handleRestore = async (id) => {
+        try {
+            await axios.post(`/api/users/restore/${id}`)
+            setStatus('User restored successfully!')
+            fetchUsers()
+            fetchTrashedUsers()
         } catch (error) {
             console.error(error)
         }
@@ -174,6 +197,39 @@ const Dashboard = () => {
                                                         <Button type="button" className="bg-red-900 text-white"
                                                                 onClick={() => handleDelete(user.id)}>Delete</Button>
                                                     ) : ''}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                        </tbody>
+                                    </table>
+
+                                    <div className="flex py-4 gap-4 flex-col">
+                                        <div className="flex items-center">
+                                            <h5 className="font-bold">Thrashed Users</h5>
+                                        </div>
+                                    </div>
+                                    <table className="w-full text-sm text-left">
+                                        <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                                        <tr>
+                                            <th className="px-4 py-3">ID</th>
+                                            <th className="px-4 py-3">First Name</th>
+                                            <th className="px-4 py-3">Last Name</th>
+                                            <th className="px-4 py-3">Email</th>
+                                            <th className="px-4 py-3">Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {trashedUsers.map((user) => (
+                                            <tr key={user.id} className="border-b border-gray-700">
+                                                <td className="px-4 py-3">{user.id}</td>
+                                                <td className="px-4 py-3">{user.first_name}</td>
+                                                <td className="px-4 py-3">{user.last_name}</td>
+                                                <td className="px-4 py-3">{user.email}</td>
+                                                <td className="px-4 py-3 flex gap-4">
+                                                    <Button type="button" className="bg-green-900 text-white"
+                                                            onClick={() => handleRestore(user.id)}>
+                                                        Restore
+                                                    </Button>
                                                 </td>
                                             </tr>
                                         ))}

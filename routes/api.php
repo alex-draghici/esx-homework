@@ -10,4 +10,6 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('users', UserController::class);
+    Route::get('/users/trashed', [UserController::class, 'trashed']);
+    Route::post('/users/restore/{id}', [UserController::class, 'restore']);
 });
